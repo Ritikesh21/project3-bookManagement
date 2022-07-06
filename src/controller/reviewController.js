@@ -1,15 +1,15 @@
-const ReviewModel = require('../model/reviewModel')
+const reviewModel = require('../model/reviewModel')
 
-const createReview = (req, res) => {
+const createReview = async (req, res) => {
     try {
         const data = req.body;
         if(data){
-            const newReview = ReviewModel.create(data)
+            const newReview = await reviewModel.create(data)
             res.status(201).send({status : true,
             data : newReview})
         }
         else{
-            res.status(404).send({status : false,
+            res.status(400).send({status : false,
             message : "No Data Found"})
         }
     } catch (error) {

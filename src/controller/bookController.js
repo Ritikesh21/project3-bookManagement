@@ -1,15 +1,15 @@
 const bookModel = require('../model/bookModel')
 
-const createBook = (req, res) => {
+const createBook = async (req, res) => {
     try {
         const data = req.body;
         if(data){
-            const newBook = bookModel.create(data)
+            const newBook = await bookModel.create(data)
             res.status(201).send({status : true,
             data : newBook})
         }
         else{
-            res.status(404).send({status : false,
+            res.status(400).send({status : false,
             message : "No Data Found"})
         }
     } catch (error) {
