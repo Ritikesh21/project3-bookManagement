@@ -53,7 +53,7 @@ const getBookById = async (req, res) => {
         if (Object.keys(book).length != 0){
             const review = await reviewModel.find({bookId : bookId})
             if(review.length != 0){
-                book[0] = {...book[0]._doc, reviewsData : []}
+                book[0] = {...book[0]._doc, reviewsData : review}
             }
             else{
                 book[0] = {...book[0]._doc, reviewsData : []}
@@ -87,3 +87,24 @@ const updateBookById = async (req, res) => {
 }
 
 module.exports.updateBookById = updateBookById
+
+const deleteBookById = async (req, res) => {
+    try {
+        const bookId = req.params.bookId
+        const book = await bookModel.findOneAndUpdate({_id : bookId, isDeleted : false}, {isDeleted : true}, {new : true})
+        if(book){
+            res.status(200).send({status : true,
+            Message : "Data Deleted Successfully"})
+        }
+        else{
+            res.status(404).send({status : true,
+            Message : "No Data Found"})
+        }
+
+    } catch (error) {
+        res.status(500).send({status : false,
+        Error : error}) 
+    }
+}
+
+module.exports.deleteBookById = deleteBookById

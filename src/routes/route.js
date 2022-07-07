@@ -6,7 +6,7 @@ router.post("/register", createUser)
 
 router.post("/login", loginUser)
 
-const {createBook, getBook, getBookById, updateBookById} = require('../controller/bookController')
+const {createBook, getBook, getBookById, updateBookById, deleteBookById} = require('../controller/bookController')
 router.post("/books", createBook)
 
 router.get('/books', getBook)
@@ -15,7 +15,13 @@ router.get('/books/:bookId', getBookById)
 
 router.put('/books/:bookId', updateBookById)
 
-const {createReview} = require('../controller/reviewController')
+router.delete('/books/:bookId', deleteBookById)
+
+const {createReview, updateReviewById, deleteReviewById} = require('../controller/reviewController')
 router.post("/books/:bookId/review", createReview)
+
+router.put('/books/:bookId/review/:reviewId', updateReviewById)
+
+router.delete('/books/:bookId/review/:reviewId', deleteReviewById)
 
 module.exports = router
