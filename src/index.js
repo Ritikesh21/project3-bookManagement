@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
-const { port, mongoDb } = require('./config')
+const { port, mongoDb} = require('./config')
+
 app.use(express.json())
 
 const route = require('./routes/route')

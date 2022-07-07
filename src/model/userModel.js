@@ -14,13 +14,13 @@ const userSchema = mongoose.Schema({
         type : String,
         required : true,
         unique : true,
-        match : "^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$"
+        //match : /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/
     },
     email : {
         type : String,
         required : true,
         unique : true,
-        match : "^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"
+        match : /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
     },
     password : {
         type : String,
