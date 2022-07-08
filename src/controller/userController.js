@@ -1,5 +1,6 @@
 const userModel = require('../model/userModel')
 const jwt = require('jsonwebtoken')
+const { secretKey } = require('../config')
 
 const createUser = async (req, res) => {
     try {
@@ -23,7 +24,7 @@ const loginUser = async (req, res) => {
         if (Object.keys(user).length != 0){
             let token = jwt.sign({
                 userId : user._id
-            }, "project3Group29", {expiresIn : '300s'})
+            }, secretKey, {expiresIn : '300s'})
             res.setHeader('group29', token)
             res.status(201).send({status : true,
             message : 'Succesful Login',

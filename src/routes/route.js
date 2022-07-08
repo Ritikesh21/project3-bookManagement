@@ -2,14 +2,15 @@ const express = require('express')
 const router = express.Router()
 
 const {validatorError} = require('../validation/errorhandling')
-const {createBookValidation, getBookByIdValidation, getBookValidation, updateBookByIdValidation, deleteBookByIdValidation} = require('../validation/bookValidation')
 
 const {createUser, loginUser} = require('../controller/userController')
-router.post("/register", createUser)
+const {createUserValidation, loginUserValidation} = require('../validation/userValidation')
+router.post("/register", createUserValidation, validatorError, createUser)
 
-router.post("/login", loginUser)
+router.post("/login", loginUserValidation, validatorError, loginUser)
 
 const {createBook, getBook, getBookById, updateBookById, deleteBookById} = require('../controller/bookController')
+const {createBookValidation, getBookByIdValidation, getBookValidation, updateBookByIdValidation, deleteBookByIdValidation} = require('../validation/bookValidation')
 router.post("/books", createBookValidation, validatorError, createBook)
 
 router.get('/books', getBookValidation, validatorError, getBook)
@@ -21,10 +22,11 @@ router.put('/books/:bookId', updateBookByIdValidation, validatorError, updateBoo
 router.delete('/books/:bookId', deleteBookByIdValidation, validatorError, deleteBookById)
 
 const {createReview, updateReviewById, deleteReviewById} = require('../controller/reviewController')
-router.post("/books/:bookId/review", createReview)
+const { createReviewValidation, updateReviewByIdValidation, deleteReviewByIdValidation } = require('../validation/reviewValidation')
+router.post("/books/:bookId/review", createReviewValidation, validatorError, createReview)
 
-router.put('/books/:bookId/review/:reviewId', updateReviewById)
+router.put('/books/:bookId/review/:reviewId', updateReviewByIdValidation, validatorError, updateReviewById)
 
-router.delete('/books/:bookId/review/:reviewId', deleteReviewById)
+router.delete('/books/:bookId/review/:reviewId', deleteReviewByIdValidation, validatorError, deleteReviewById)
 
 module.exports = router
