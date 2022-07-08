@@ -12,6 +12,6 @@ mongoose.connect(mongoDb)
 .then(console.log("MongoDb is Connected"))
 .catch(error => console.log(error))
 
-app.listen(port || 3000, () => {
-    console.log("Connected to PORT ", port || 3000)
+app.listen(port || 4000, () => {
+    console.log("Connected to PORT ", port || 4000)
 })

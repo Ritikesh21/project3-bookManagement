@@ -19,6 +19,7 @@ const getBook = async (req, res) => {
     try {
         const condition = req.query
         if(Object.keys(condition).length != 0){
+            Object.assign(condition, {isDeleted : false})
             const books = await bookModel.find(condition, {_id : 1, title : 1, excerpt : 1, userId : 1, category : 1, releasedAt : 1, reviews : 1})
             if(books){
                 res.status(200).send({status : true,
@@ -49,9 +50,9 @@ module.exports.getBook = getBook
 const getBookById = async (req, res) => {
     try {
         const bookId = req.params.bookId
-        const book = await bookModel.find({_id : bookId})
+        const book = await bookModel.find({_id : bookId, isDeleted : false})
         if (Object.keys(book).length != 0){
-            const review = await reviewModel.find({bookId : bookId})
+            const review = await reviewModel.find({bookId : bookId, isDeleted : false})
             if(review.length != 0){
                 book[0] = {...book[0]._doc, reviewsData : review}
             }
