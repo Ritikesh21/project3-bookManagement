@@ -1,29 +1,31 @@
 const {body, param, query} = require('express-validator')
 const bookModel = require('../model/bookModel')
 
+const title = 
+                body('title')
+                .exists()
+                .withMessage('title Not Found')
+                .isString()
+                .withMessage('title must be in String')
+                .custom(value => {
+                    return bookModel.findOne({title : value}).then(user => {
+                      if (user) {
+                        return Promise.reject('title value already in use')
+                      }
+                    })
+                  })
 const createBookValidation = [
-    body('title')
-    .exists()
-    .withMessage('title Not Found')
-    .isString()
-    .withMessage('title must be in String')
-    .custom(value => {
-        return bookModel.findOne({title : value}).then(user => {
-          if (user) {
-            return Promise.reject('title value already in use')
-          }
-        })
-      }),
+    title,
     body('excerpt')
     .exists()
     .withMessage('excerpt Not Found')
     .isString()
     .withMessage('excerpt must be in String'),
-    body('userId')
+    /*body('userId')
     .exists()
     .withMessage('userId Not Found')
     .isMongoId()
-    .withMessage('userId must be in MongoId'),
+    .withMessage('userId must be in MongoId'),*/
     body('ISBN')
     .exists()
     .withMessage('ISBN Not Found')
@@ -47,12 +49,13 @@ const createBookValidation = [
     .isString()
     .withMessage('subcategory must be in String'),
     body('reviews')
-    .isInt()
+    .isInt(0)
     .withMessage('reviews must be in Integer Format')
     .custom(value => {
       if(value != 0){
         return Promise.reject('No Reviews yet Default value must be 0')
       }
+      return true
     }),
     body('deletedAt')
     .optional()
@@ -106,14 +109,14 @@ const getBookByIdValidation = [
 module.exports.getBookByIdValidation = getBookByIdValidation
 
 const updateBookByIdValidation = [
-  param('bookId')
+  /*param('bookId')
   .exists()
   .withMessage('bookId Not Found')
   .isMongoId()
   .withMessage('bookId must be in MongoId')
   .custom(value => {
       return bookModel.findOne({_id : value}) })
-  .withMessage('Invalid Book Id'),
+  .withMessage('Invalid Book Id'),*/
   body('title')
   .optional()
   .isString()

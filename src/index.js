@@ -3,6 +3,7 @@ const app = express()
 const { port, mongoDb} = require('./config')
 
 app.use(express.json())
+app.use(express.urlencoded())
 
 const route = require('./routes/route')
 app.use('/', route)

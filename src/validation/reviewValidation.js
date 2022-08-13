@@ -25,6 +25,7 @@ const createReviewValidation = [
         if(value < 0 || value > 5){
             return Promise.reject('Please Enter a Valid Rating Between 1 to 5')
         }
+        return true
     }),
     body('review')
     .optional()
@@ -63,6 +64,7 @@ const updateReviewByIdValidation = [
         if(value < 0 || value > 5){
             return Promise.reject('Please Enter a Valid Rating Between 1 to 5')
         }
+        return true
     }),
     body('reviewedBy')
     .optional()
